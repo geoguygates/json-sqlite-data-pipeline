@@ -1,5 +1,5 @@
 import os
-from config import ROOT_DIR
+from config import ROOT_DIR, extract_bucket_pathname
 import extract_functions as ef
 
 # Extract sqlite data from source directory
@@ -21,10 +21,7 @@ json_pathname = os.path.join(ROOT_DIR, '0_source_data', 'readings')
 
 smart_meter_readings_df = ef.add_json_files_into_df(json_pathname)
 
-# Write each of the four dataframes to individual parquet files in a code output directory
-
-extract_bucket_pathname = os.path.join(
-    ROOT_DIR, '2_project_code_output', 'extract_bucket')
+# Write each of the four dataframes to individual parquet files
 
 for key, value in sqlite_dfs.items():
     value.to_parquet(f'{extract_bucket_pathname}\{key}_df.parquet')
